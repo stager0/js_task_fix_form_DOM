@@ -1,21 +1,28 @@
 'use strict';
 
 // write code here
-const inputsArr = document.querySelectorAll('form input');
+const forms = document.querySelectorAll('form')
+
+const inputsArr = []
+for (const form of forms) {
+  inputsArr.push(...form.querySelectorAll('input'))
+}
 
 for (const inputElement of inputsArr) {
-  const tagToAdd = document.createElement('label');
-  tagToAdd.classList.add('field-label');
 
-  tagToAdd.setAttribute('for', (inputElement.id || 'input-without-for'));
-  tagToAdd.textContent = inputElement.name || 'no-name';
+  if (inputElement.id) {
+    const tagToAdd = document.createElement('label');
 
-  inputElement.parentElement.appendChild(tagToAdd);
+    tagToAdd.setAttribute('for', (inputElement.id));
+    tagToAdd.classList.add('field-label');
+    tagToAdd.textContent = inputElement.name || 'No name';
+    inputElement.parentElement.appendChild(tagToAdd);
+  }
 
   if (inputElement.name) {
     inputElement.placeholder = (inputElement.name.charAt(0).toUpperCase() + inputElement.name.slice(1));
   } else {
-    inputElement.placeholder = "no-name";
+    inputElement.placeholder = "No name";
   }
 
 }
